@@ -24,6 +24,9 @@ class LocalJenkinsController < JenkinsController
     @log = File.open(JENKINS_DEBUG_LOG, "w")
 
     @base_url = "http://127.0.0.1:#{@httpPort}/"
+
+    @form_path_hpi = opts[:form_path_hpi] || File.expand_path("./form-element-path.hpi")
+    preinstall_form_path_plugin
   end
 
   def start!

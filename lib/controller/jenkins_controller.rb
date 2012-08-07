@@ -10,11 +10,12 @@ require 'temp_dir'
 # Each JenkinsController goes through the call sequence of +(start,restart*,stop)+ sprinkled with
 # calls to +url+ and +diagnose+.
 class JenkinsController
-  attr_accessor :is_running, :log_watcher
+  attr_accessor :is_running, :log_watcher, :is_form_path_installed
 
   def initialize(*args)
     @is_running = false
     @log_watcher = nil
+    @is_form_path_installed = false
   end
 
   # Starts Jenkins, with a brand new temporary JENKINS_HOME.
@@ -72,6 +73,17 @@ class JenkinsController
   def is_running?
     @is_running
   end
+
+  def preinstall_form_path_plugin
+    if( (defined? @form_path_hpi) && File.exists?(@form_path_hpi) )
+      FileUtils.mkdir "#{@tempdir}/plugins" unless File.directory?("#{@tempdir}/plugins") 
+      FileUtils.cp(@form_path_hpi,"#{@tempdir}/plugins")
+      @is_form_path_installed = true
+    else
+      puts "Cannot pre-install form-element-path.hpi file, #{@form_path_hpi} doesn't exists or is not a file. Will try to install it from Update Center"
+    end
+  end
+
 
   # registered implementations
   @@impls = {}

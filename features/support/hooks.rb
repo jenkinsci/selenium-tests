@@ -45,6 +45,17 @@ Before do |scenario|
       sleep 0.5
     end
   end
+  
+  # install form-element-path plugin if it's not pre-installed
+  unless @runner.is_form_path_installed
+    if( (defined? @runner.real_update_center) && !@runner.real_update_center )
+      raise "Form-element-path plugin not pre-installed and update center is disabled. Tests need Form-element-path plugin, please ensure that plugin is installed."
+    end
+    manager = Jenkins::PluginManager.new(@base_url, nil)
+    manager.install_plugin "form-element-path"
+    found = @runner.log_watcher.wait_until_logged(/Installation successful: Form Element Path Plugin/i)
+    raise "Cannot install form-element-path plugin" unless found
+  end
 end
 
 After do |scenario|
