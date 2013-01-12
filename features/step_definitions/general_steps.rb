@@ -6,18 +6,18 @@ When /^I visit the home page$/ do
   visit "/"
 end
 
-When /^I click the "([^"]*)" checkbox$/ do |name|
+When /^I click the "(.*?)" checkbox$/ do |name|
   find(:xpath, "//input[@name='#{name}']").set(true)
 end
 
-# Choose an option by value or text in select identified by it's visual label
+# Choose an option by value or text in select identified by its visual label
 When /^I select "(.*?)" as a "(.*?)"$/ do |choice, select|
   select = find(:xpath, "//td[@class='setting-name' and text()='#{select}']/../td[@class='setting-main']/select")
   option = select.find(:xpath, "option[@value='#{choice}' or text()='#{choice}']")
   option.select_option
 end
 
-Then /^the page should say "([^"]*)"$/ do |content|
+Then /^the page should say "(.*?)"$/ do |content|
   page.should have_content(content)
 end
 

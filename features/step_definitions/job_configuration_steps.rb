@@ -3,11 +3,11 @@ When /^I configure the job$/ do
   @job.configure
 end
 
-When /^I add a script build step to run "([^"]*)"$/ do |script|
+When /^I add a script build step to run "(.*?)"$/ do |script|
   @job.add_script_step(script)
 end
 
-When /^I tie the job to the "([^"]*)" label$/ do |label|
+When /^I tie the job to the "(.*?)" label$/ do |label|
   @job.configure do
     @job.label_expression = label
   end
