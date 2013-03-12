@@ -51,6 +51,11 @@ When /^I visit "([^"]*)" action on build page$/ do |action|
   find(:xpath, "//div[@id='tasks']/div/a[text()='#{action}']").click
 end
 
+When /^I visit "([^"]*)" action on the job page$/ do |action|
+  @job.open
+  find(:xpath, "//div[@id='tasks']/div/a[text()='#{action}']").click
+end
+
 When /^I build (\d+) jobs$/  do |count|
   count.to_i.times do |i|
     @job.queue_build
@@ -76,6 +81,11 @@ Then /^the (job|build) (should|should not) have "([^"]*)" action$/ do |entity, s
   page_object = entity == 'job' ? @job : @job.last_build
   page_object.open
   page.send should_or_not, have_xpath("//div[@id='tasks']/div/a[text()='#{action}']")
+end
+
+Then /^I should see "([^"]*)" action on the job page$/ do |action|
+  @job.open
+  page.should have_xpath("//div[@id='tasks']/div/a[text()='#{action}']")
 end
 
 Then /^the (\d+) jobs should run concurrently$/ do |count|
