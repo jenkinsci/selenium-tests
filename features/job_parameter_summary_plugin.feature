@@ -12,3 +12,12 @@ Feature: Sumarize job parameters
     And I save the job
     Then summary should contain String Parameter "MY_STRING_PARAM_0" defaulting to "MY_STRING_VAL_0"
     And summary should contain String Parameter "MY_STRING_PARAM_1" defaulting to "MY_STRING_VAL_1"
+
+  @since(1.541)
+  Scenario: Show matrix job parameter summary
+    Given I have installed the "job-parameter-summary" plugin
+    And a matrix job
+    When I configure the job
+    And I add a string parameter "MY_STRING_PARAM_0" defaulting to "MY_STRING_VAL_0"
+    And I save the job
+    Then summary should contain String Parameter "MY_STRING_PARAM_0" defaulting to "MY_STRING_VAL_0"
