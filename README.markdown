@@ -1,3 +1,19 @@
+# [This project is being ported over to Java](https://github.com/jenkinsci/acceptance-test-harness). Please add new tests over there, not here.
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
 # Selenium tests for Jenkins
 
 This is a project to flesh out some of the [manual test cases for Jenkins
