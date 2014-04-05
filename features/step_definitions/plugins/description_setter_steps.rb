@@ -7,12 +7,13 @@ When /^I set up "([^"]*)" as the description setter description$/ do |descriptio
 end
 
 Then /^the build should have description "([^"]*)"$/ do |description|
-  @job.last_build.open
+  @job.last_build.wait_until_finished.open
   desc = first(:xpath,'//div[@id="description"]/div')
   desc.should have_content(description)
 end
 
 Then /^the build should have description "([^"]*)" in build history$/ do |description|
+  @job.last_build.wait_until_finished
   @job.open
   desc = find(:xpath,'//table[@id="buildHistory"]/tbody/tr/td[@class="desc"]')
   desc.should have_content(description)
