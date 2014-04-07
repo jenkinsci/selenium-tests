@@ -18,12 +18,13 @@ module Plugins
     include Jenkins::PageArea
 
     SERVER = 'mailtrap.io'
-    MAILBOX = 'selenium-tests-69507a9ef0aa7fa5'
-    PASSWORD = '72a80a49ae5ab81d'
+    MAILBOX = '19251ad93afaab19b'
+    INBOX_ID = "23170"
+    PASSWORD = 'c9039d1f090624'
     PORT = '2525'
-    TOKEN = 'wvpGO0F4gT8DTZJIHzkpmQ'
-    MESSAGES_API_URL = 'http://mailtrap.io/api/v1/inboxes/%s/messages?page=1&token=%s'
-    MESSAGE_API_URL = 'http://mailtrap.io/api/v1/inboxes/%s/messages/%s?token=%s'
+    TOKEN = '2c04434bd66dfc37c130171f9d061af2'
+    MESSAGES_API_URL = 'https://mailtrap.io/api/v1/inboxes/%s/messages?page=1&api_token=%s'
+    MESSAGE_API_URL = 'https://mailtrap.io/api/v1/inboxes/%s/messages/%s/body.raw?api_token=%s'
 
     def initialize(global_config, prefix)
       super(global_config, prefix)
@@ -62,9 +63,9 @@ module Plugins
     def mail(subject)
       messages = []
       fetch_messages.each do |msg|
-        if msg['message']['title'].match subject
+        if msg['subject'].match subject
 
-          message = Mail.new fetch_message(msg['message']['id'])
+          message = Mail.new fetch_message(msg['id'])
           if is_ours? message
             messages << message
           end
@@ -103,15 +104,15 @@ module Plugins
     end
 
     def fetch_messages
-      fetch_json(MESSAGES_API_URL % [MAILBOX, TOKEN])
+      JSON.parse fetch(MESSAGES_API_URL % [INBOX_ID, TOKEN])
     end
 
     def fetch_message(message_id)
-      fetch_json(MESSAGE_API_URL % [MAILBOX, message_id, TOKEN])['message']['source']
+      fetch(MESSAGE_API_URL % [INBOX_ID, message_id, TOKEN])
     end
 
-    def fetch_json(url)
-      return JSON.parse(Net::HTTP.get_response(URI.parse(url)).body)
+    def fetch(url)
+      return Net::HTTP.get_response(URI.parse(url)).body
     end
   end
 end
