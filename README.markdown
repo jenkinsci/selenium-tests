@@ -1,4 +1,4 @@
-# [This project is being ported over to Java](https://github.com/jenkinsci/acceptance-test-harness). Please add new tests over there, not here.
+# This project is no longer used and maintained as it was [ported over to Java](https://github.com/jenkinsci/acceptance-test-harness). Please add new tests over there, not here.
 
 &nbsp;
 
